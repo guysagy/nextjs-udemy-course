@@ -1,16 +1,31 @@
 import  Heading from '@/components/Heading';
+import { orbitron } from '@/app/fonts';
 import Link from 'next/link';
 
 export default function ReviewsPage() {
     return (
         <div>
             <Heading>Reviews</Heading>
-            <ul>
-                <li>
-                    <Link href="/reviews/stardew-valley">Stardew Valley Reviews</Link>
+            <ul className="flex flex-col gap-3">
+                <li className="bg-white border rounded shadow w-80 hover:shadow-xl">
+                    <Link href="/reviews/hollow-night">
+                        <img src="/images/hollow-knight.jpg" alt=""
+                            width="320px" height="180px" className="rounded-t"
+                        />
+                        <h2 className={`font-semibold py-1 text-center ${orbitron.className}`}>
+                            Hollow Knight
+                        </h2>
+                    </Link>
                 </li>
-                <li>
-                    <Link href="/reviews/hollow-night">Hollow Night Reviews</Link>
+                <li className="bg-white border rounded shadow w-80 hover:shadow-xl">
+                    <Link href="/reviews/stardew-valley">
+                        <img src="/images/stardew-valley.jpg" alt="Stardew Valley"
+                            width="320px" height="180px" className="rounded-t"
+                        />
+                        <h2 className={`font-semibold py-1 text-center ${orbitron.className}`}>
+                            Stardew Valley
+                        </h2>
+                    </Link>
                 </li>
             </ul>
         </div>

@@ -1,0 +1,1 @@
+# this project follows course https://authentic8.udemy.com/course/nextjs-by-example/learn/lecture/37953034#overview

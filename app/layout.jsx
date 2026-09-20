@@ -4,6 +4,15 @@ import './globals.css'
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/orbitron-variable.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="bg-orange-50 flex flex-col px-4 py-2 min-h-screen">
         <NavBar />
         <main className="grow py-3">

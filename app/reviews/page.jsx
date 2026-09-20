@@ -1,5 +1,4 @@
 import  Heading from '@/components/Heading';
-import { orbitron } from '@/app/fonts';
 import Link from 'next/link';
 
 export default function ReviewsPage() {
@@ -12,7 +11,7 @@ export default function ReviewsPage() {
                         <img src="/images/hollow-knight.jpg" alt=""
                             width="320px" height="180px" className="rounded-t"
                         />
-                        <h2 className={`font-semibold py-1 text-center ${orbitron.className}`}>
+                        <h2 className="font-orbitron font-semibold py-1 text-center">
                             Hollow Knight
                         </h2>
                     </Link>
@@ -22,7 +21,7 @@ export default function ReviewsPage() {
                         <img src="/images/stardew-valley.jpg" alt="Stardew Valley"
                             width="320px" height="180px" className="rounded-t"
                         />
-                        <h2 className={`font-semibold py-1 text-center ${orbitron.className}`}>
+                        <h2 className="font-orbitron font-semibold py-1 text-center">
                             Stardew Valley
                         </h2>
                     </Link>

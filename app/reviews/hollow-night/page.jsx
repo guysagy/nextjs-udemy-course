@@ -1,13 +1,19 @@
 import  Heading from '@/components/Heading';
+import { getReview } from '@/lib/reviews';
 
-export default function HollowNightPage() {
+export default async function HollowNightPage() {
+    const { title, date, image, body } = await getReview('hollow-night');
+
     return (
-        <div>
-            <Heading>Hollow Night</Heading>
-            <img src="/images/hollow-knight.jpg" alt="Hollow Night"
+        <>
+            <Heading>{title}</Heading>
+            <p className="italic pb-2">{date}</p>
+            <img src={image} alt=""
                 width="640px" height="360px" className="mb-2 rounded"
             />
-            <p>Here we'll list all the reviews for Hollow Night.</p>
-        </div>
+            <article dangerouslySetInnerHTML={{ __html: body }}
+                className="max-w-screen-sm prose prose-slate"
+            />
+        </>
     )
 }

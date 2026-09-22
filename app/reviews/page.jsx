@@ -7,7 +7,7 @@ export default function ReviewsPage() {
             <Heading>Reviews</Heading>
             <ul className="flex flex-col gap-3">
                 <li className="bg-white border rounded shadow w-80 hover:shadow-xl">
-                    <Link href="/reviews/hollow-night">
+                    <Link href="/reviews/hollow-knight">
                         <img src="/images/hollow-knight.jpg" alt=""
                             width="320px" height="180px" className="rounded-t"
                         />

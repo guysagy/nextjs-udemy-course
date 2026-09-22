@@ -1,5 +1,14 @@
 import NavBar from '@/components/NavBar';
+import strings from '../strings';
 import './globals.css'
+
+export const metadata = {
+    title: {
+      default: strings.appName,
+      template: `%s | ${strings.appName}`
+    },
+    description: strings.appTitle,
+};
 
 export default function RootLayout({ children }) {
   return (

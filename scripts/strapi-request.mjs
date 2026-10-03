@@ -1,6 +1,7 @@
 import { writeFileSync } from 'node:fs';
 import qs from 'qs';
 
+// get all reviews:
 const url = 'http://localhost:1337/api/reviews' + '?' + qs.stringify({
     fields: ['slug', 'title', 'subtitle', 'publishedAt', ],
     populate: { image: { fields: ['url'] } },
@@ -13,3 +14,4 @@ const body = await response.json();
 const formattedBody = JSON.stringify(body, null, 2);
 console.log(formattedBody);
 writeFileSync('strapi-response.json', formattedBody, 'utf8');
+

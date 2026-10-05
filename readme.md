@@ -1,5 +1,12 @@
 # this project follows course https://authentic8.udemy.com/course/nextjs-by-example/learn/lecture/37953034#overview
 
+Instructor
+Mirko Nasato
+Software Developer and Mentor
+Mirko has 20 years of experience developing software for a wide range of companies, from startups to large, high-profile organisations, more recently as Lead Developer and Architect.
+
+He is familiar with a number of programming languages and the full application stack, from backend services to web and mobile apps. Mirko also holds a Postgraduate Diploma in Software Development from the Open University.
+
 ## Fonts
 
 The Orbitron display font is **self-hosted** and wired up through Tailwind v4's

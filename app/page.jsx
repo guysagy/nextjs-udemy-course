@@ -1,28 +1,43 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Heading from '@/components/Heading';
-import { getFeaturedReview } from '@/lib/reviews';
+import { getReviews } from '@/lib/reviews';
 import strings from '../strings';
 
 export default async function HomePage() {
-    const featuredReview = await getFeaturedReview();
+    const reviews = await getReviews(3);
     return (
         <div>
             <Heading>{strings.appName}</Heading>
             <p className="pb-3">
                 {strings.appTitle}
             </p>
-            <div className="bg-white border rounded shadow w-80 hover:shadow-xl sm:w-full">
-                <Link href={`/reviews/${featuredReview.slug}`}
-                    className="flex flex-col sm:flex-row"
-                >
-                    <img src={featuredReview.image} alt=""
-                        width="320px" height="180px" className="rounded-t sm:rounded-l sm:rounded-r-none"
-                    />
-                    <h2 className="font-orbitron font-semibold py-1 text-center sm:px-2">
-                        {featuredReview.title}
-                    </h2>
-                </Link>
-            </div>
+            <ul className="flex flex-col gap-3">
+            {
+                reviews.map((review, index) => (
+                    <li key={review.slug}
+                        className="bg-white border rounded shadow w-80 hover:shadow-xl sm:w-full">
+                        <Link href={`/reviews/${review.slug}`}
+                            className="flex flex-col sm:flex-row"
+                        >
+                            <Image src={review.image}
+                                priority={index === 0} alt=""
+                                width="320" height="180"
+                                className="rounded-t sm:rounded-l sm:rounded-r-none"
+                            />
+                            <div className="px-2 py-1 text-center sm:text-left">
+                                <h2 className="font-orbitron font-semibold">
+                                    {review.title}
+                                </h2>
+                                <p className="hidden pt-2 sm:block">
+                                    {review.subtitle}
+                                </p>
+                            </div>
+                        </Link>
+                    </li>
+                ))
+            }
+            </ul>
         </div>
     )
 }

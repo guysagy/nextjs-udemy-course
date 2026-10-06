@@ -17,11 +17,14 @@ export async function generateMetadata({ params: { slug } }) {
 }
 
 export default async function ReviewPage({ params: { slug } }) {
-    const { title, date, image, body } = await getReview(slug);
+    const { title, subtitle, date, image, body } = await getReview(slug);
 
     return (
         <>
             <Heading>{title}</Heading>
+            <p className="font-semibold pb-3">
+                {subtitle}
+            </p>
             <div className="flex gap-3 items-baseline">
                 <p className="italic pb-2">{date}</p>
                 <ShareLinkButton />

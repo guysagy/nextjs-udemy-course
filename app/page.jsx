@@ -5,7 +5,7 @@ import { getReviews } from '@/lib/reviews';
 import strings from '../strings';
 
 export default async function HomePage() {
-    const reviews = await getReviews(2);
+    const {reviews} = await getReviews(2);
     return (
         <div>
             <Heading>{strings.appName}</Heading>

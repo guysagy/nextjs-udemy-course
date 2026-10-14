@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function PaginationBar({href, page, pageCount}) {
     return (
-        <div className="flex gap-2 pb-3 items-center">
+        <div className="flex gap-2 items-center">
             <PaginationLink href={`${href}?page=${page - 1}`}
                 enabled={page > 1}
             >

@@ -11,10 +11,14 @@ export const metadata = {
     title: 'Reviews'
 };
 
+const PAGE_SIZE = 4;
+
 export default async function ReviewsPage({searchParams}) {
     searchParams = await searchParams;
     const page = parsePageParam(searchParams?.page);
-    const { reviews , pageCount } = await getReviews(2, page);
+    const { reviews , pageCount } = await getReviews(PAGE_SIZE, page);
+
+    console.log('ReviewsPage', reviews.map(({slug, title}) => ({slug, title})));
 
     return (
         <div>

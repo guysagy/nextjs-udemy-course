@@ -5,13 +5,7 @@ import { useRouter } from 'next/navigation';
 import useIsClient from '@/lib/hooks/isClient';
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 
-const reviews = [
-  { slug: 'stardew-valley', title: 'Stardew Valley' },
-  { slug: 'hellblade', title: 'Hellblade' },
-  { slug: 'hollow-knight', title: 'Hollow Knight' }
-];
-
-export default function SearchBox() {
+export default function SearchBox({ reviews }) {
   const router = useRouter();
   const isClient = useIsClient();
   const [query, setQuery] = useState('');
@@ -24,7 +18,10 @@ export default function SearchBox() {
     return null;
   }
 
-  const filteredReviews = reviews.filter((review) => review.title.toLowerCase().includes(query.toLowerCase()));
+  const filteredReviews = reviews.filter(
+    (review) => review.title.toLowerCase().includes(query.toLowerCase())
+  ).slice(0, 10);
+
   return (
     <div className="relative w-48">
       <Combobox onChange={handleChange}>

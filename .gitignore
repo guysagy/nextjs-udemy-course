@@ -4,3 +4,4 @@
 /lib/generated/prisma
 /.env
 /dev.db
+/out/

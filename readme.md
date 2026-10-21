@@ -110,6 +110,101 @@ Just a utility class, anywhere:
 3. Add a preload `<link>` in `app/layout.jsx`.
 4. Use `font-<name>` in your components.
 
+## Prisma (v7)
+
+Comments are stored in a local SQLite database (`dev.db`) through Prisma ORM 7.
+The course was recorded on an older Prisma, and v7 changed several things, so
+don't copy the course's Prisma code as-is.
+
+| File | Role |
+|---|---|
+| `prisma/schema.prisma` | Data models and the generator config |
+| `prisma.config.ts` | Loads `.env` and gives the CLI the database URL |
+| `.env` | `DATABASE_URL="file:./dev.db"` (not committed, see below) |
+| `lib/generated/prisma/` | The generated client (not committed, regenerate it) |
+| `dev.db` | The SQLite database file (not committed) |
+
+### What's different from the course
+
+| | Older Prisma (course) | Prisma 7 (this project) |
+|---|---|---|
+| Generator | `prisma-client-js` | `prisma-client`, with `output = "../lib/generated/prisma"` |
+| Database URL | `url = env("DATABASE_URL")` in `schema.prisma` | `datasource.url` in `prisma.config.ts` |
+| `.env` loading | Automatic | Explicit `import "dotenv/config"` in `prisma.config.ts` |
+| `db push` / `migrate dev` | Also regenerate the client | **Do not** regenerate it, so run `prisma generate` yourself |
+| Import | `from '@prisma/client'` | `from './generated/prisma/client'` |
+| Connecting | `new PrismaClient()` | `new PrismaClient({ adapter })` with a driver adapter |
+
+The config file **must** be named `prisma.config.ts`. Prisma doesn't pick up
+any other name.
+
+### Workflow: after every schema change
+
+Edit `prisma/schema.prisma`, then run both commands:
+
+```sh
+npx prisma db push     # updates the database schema
+npx prisma generate    # regenerates the client in lib/generated/prisma
+```
+
+If you skip `generate`, your code keeps using the old models and new fields
+show up as missing.
+
+### Creating the client
+
+Prisma 7 needs a driver adapter to talk to SQL databases. For SQLite that's
+`@prisma/adapter-better-sqlite3`:
+
+```js
+// lib/db.js
+import { PrismaClient } from './generated/prisma/client';
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+
+const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+export const db = new PrismaClient({ adapter });
+```
+
+- The generated client is TypeScript. Next.js compiles it automatically, even
+  though the rest of this project is JavaScript.
+- If the course wraps the client in a `globalThis` singleton (to avoid creating
+  multiple clients during hot reload), keep that wrapper and replace only the
+  `new PrismaClient()` call.
+
+### Querying
+
+The query API hasn't changed, so the course's queries work as-is:
+
+```js
+const comments = await db.comment.findMany({
+  where: { slug },
+  orderBy: { postedAt: 'desc' },
+});
+
+await db.comment.create({
+  data: { slug, user, message },
+});
+```
+
+### Fresh clone / new machine
+
+`.env`, `dev.db` and `lib/generated/prisma/` aren't committed, so recreate them:
+
+```sh
+npm ci
+echo 'DATABASE_URL="file:./dev.db"' > .env   # plus CMS_IMAGE_PATTERN
+npx prisma db push                           # creates dev.db
+npx prisma generate                          # creates lib/generated/prisma
+```
+
+Run `npx prisma generate` before `npm run build` too, otherwise the build
+fails with `Cannot find module './generated/prisma/client'`.
+
+### Browsing the data
+
+```sh
+npx prisma studio
+```
+
 ## Gotcha: don't run `build` and `dev` at the same time
 
 `npm run build` and `npm run dev` both write to `.next/`. Running a build while

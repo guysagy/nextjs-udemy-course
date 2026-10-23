@@ -14,10 +14,10 @@ export default function CommentForm({ slug, title }) {
         <form action={action}
             className="border bg-white flex flex-col gap-2 mt-3 px-3 py-2 rounded">
             <p className="pb-1">
-                Already played <string>{title}</string> ? Have your say !
+                Already played <strong>{title}</strong> ? Have your say !
             </p>
             <div className="flex">
-                <label htmlFor="userfield" className="shrink-0 w-32">
+                <label htmlFor="userField" className="shrink-0 w-32">
                     Your name
                 </label>
                 <input id="userField" name="user"

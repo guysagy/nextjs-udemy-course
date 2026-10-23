@@ -56,7 +56,7 @@ export default async function ReviewPage({ params }) {
                     Comments
                 </h2>
                 <CommentForm title={review.title} />
-                <CommentList />
+                <CommentList slug={slug} />
             </section>
         </>
     )

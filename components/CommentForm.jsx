@@ -10,6 +10,7 @@ export default function CommentForm({ slug, title }) {
             message: formData.get('message'),
         });
         console.log('created comment : ', message);
+        revalidatePath(`/reviews/${slug}`);
         redirect(`/reviews/${slug}`);
     }
     return (

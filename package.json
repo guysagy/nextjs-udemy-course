@@ -1,5 +1,6 @@
 {
     "name": "next-reviews",
+    "type": "module",
     "private": true,
     "scripts": {
         "dev": "next dev",

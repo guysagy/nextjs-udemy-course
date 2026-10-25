@@ -3,15 +3,17 @@ import { revalidatePath } from 'next/cache';
 import { createComment } from '@/lib/comments';
 
 export async function createCommentAction(formData) {
-    if (!formData.get('user')) {
-        return { isError: true, message: 'Name field is required' };
-    }
 
     const data = {
         slug: formData.get('slug'),
         user: formData.get('user'),
         message: formData.get('message'),
     };
+
+    const error = validate(data);
+    if (error) {
+        return { isError: true, message: error };
+    }
 
     const message = await createComment(data);
     console.log('created comment : ', message);
@@ -29,4 +31,19 @@ export async function createCommentAction(formData) {
     // To fix it, delete the redirect(...) line and the import { redirect } ... at the top.
     // If your Next.js version is on React 19, the form also clears its fields automatically after the action finishes.
     // redirect(`/reviews/${slug}`);
+}
+
+function validate(data) {
+    if (!data.user) {
+        return 'Name field is required';
+    }
+    if (data.user.length > 50) {
+        return 'Name field longer than 50 characters';
+    }
+    if (!data.message) {
+        return 'Comment field is required';
+    }
+    if (data.message.length > 500) {
+        return 'Comment field cannot be longer than 500 characters';
+    }
 }

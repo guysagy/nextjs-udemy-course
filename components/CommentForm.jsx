@@ -2,25 +2,10 @@
 
 import React from 'react';
 import { createCommentAction } from '@/app/reviews/[slug]/actions';
+import useFormState from '@/lib/hooks/useFormState';
 
 export default function CommentForm({ slug, title }) {
-
-    const [error, setError] = React.useState(null);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setError(null);
-
-        const form = event.currentTarget;
-        const formData = new FormData(form);
-        const result = await createCommentAction(formData);
-
-        if (result?.isError) {
-            setError(result);
-        } else  {
-            form.reset();
-        }
-    };
+    const [state, handleSubmit] = useFormState(createCommentAction);
 
     return (
         <form onSubmit={handleSubmit}
@@ -46,13 +31,14 @@ export default function CommentForm({ slug, title }) {
                 />
             </div>
             {
-                Boolean(error) && (
-                    <p className="text-red-700">{error.message}</p>
+                Boolean(state.error) && (
+                    <p className="text-red-700">{state.error}</p>
                 )
             }
-            <button type="submit"
+            <button type="submit" disabled={state.disabled}
                 className="bg-orange-800 rounded px-2 py-1 self-center
-                            text-slate-50 w-32 hover:bg-orange-700"
+                            text-slate-50 w-32 hover:bg-orange-700
+                            disabled:bg-slate-500 disabled:cursor-not-allowed"
             >
                 Submit
             </button>

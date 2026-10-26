@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import useIsClient from '@/lib/hooks/isClient';
+import useIsClient from '@/lib/hooks/useIsClient';
 import { useDebounce } from 'use-debounce';
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from '@headlessui/react';
 

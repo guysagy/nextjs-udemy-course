@@ -3,6 +3,7 @@ import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import  Heading from '@/components/Heading';
+import CommentListSkeleton from '@/components/CommentListSkeleton';
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
 import { getReview } from '@/lib/reviews';
@@ -57,7 +58,7 @@ export default async function ReviewPage({ params }) {
                     Comments
                 </h2>
                 <CommentForm slug={slug} title={review.title} />
-                <Suspense fallback={<p>Loading ...</p>}>
+                <Suspense fallback={<CommentListSkeleton />}>
                     <CommentList slug={slug} />
                 </Suspense>
             </section>

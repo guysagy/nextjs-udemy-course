@@ -1,5 +1,6 @@
 'use server';
 
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function signinAction(formData) {
@@ -10,6 +11,7 @@ export async function signinAction(formData) {
     if (!user) {
         return { isError: true, message: 'Invalid credentials' };
     }
+    cookies().set('user', JSON.stringify(user));
     redirect('/');
 }
 

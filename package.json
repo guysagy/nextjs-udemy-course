@@ -13,6 +13,7 @@
         "@heroicons/react": "^2.2.0",
         "@prisma/adapter-better-sqlite3": "^7.10.1",
         "@prisma/client": "^7.10.1",
+        "jose": "^6.2.14",
         "marked": "^15.0.12",
         "next": "^15.5.25",
         "prisma": "^7.10.1",

@@ -2,6 +2,9 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { SignJWT } from 'jose';
+
+const JWT_SECRET = new TextEncoder().encode('some-random-string');
 
 export async function signinAction(formData) {
     const email = formData.get('email');
@@ -11,7 +14,12 @@ export async function signinAction(formData) {
     if (!user) {
         return { isError: true, message: 'Invalid credentials' };
     }
-    cookies().set('user', JSON.stringify(user));
+
+    const sessionToken = await new SignJWT(user)
+        .setProtectedHeader({alg: 'HS256'})
+        .sign(JWT_SECRET)
+
+    cookies().set('sessionToken', sessionToken);
     redirect('/');
 }
 

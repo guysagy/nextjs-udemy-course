@@ -1,4 +1,5 @@
 import NavLink from './NavLink';
+import SignOutButton from '@/components/SignOutButton';
 import { getUserFromSession } from '@/lib/auth';
 
 export default async function NavBar() {
@@ -23,14 +24,13 @@ export default async function NavBar() {
                 </li>
                 {
                     user ? (
-                        <li>
-                            {user.email}
-                        </li>
+                        <SignOutButton />
                     ) : (
-                    <NavLink href="/sign-in">
-                        Sign in
-                    </NavLink>
-                )}
+                        <NavLink href="/sign-in">
+                            Sign in
+                        </NavLink>
+                    )
+                }
             </ul>
         </nav>
     )

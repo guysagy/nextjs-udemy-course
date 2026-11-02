@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { setSessionCookie } from '@/lib/auth';
+import { setSessionCookie, deleteSessionCookie } from '@/lib/auth';
 
 export async function signinAction(formData) {
     const email = formData.get('email');
@@ -19,4 +19,8 @@ function authenticate(email, password) {
     if (email.endsWith('@example.com') && password === 'test') {
         return { email };
     }
+}
+
+export async function signoutAction() {
+    await deleteSessionCookie();
 }

@@ -1,10 +1,7 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SignJWT } from 'jose';
-
-const JWT_SECRET = new TextEncoder().encode('some-random-string');
+import { setSessionCookie } from '@/lib/auth';
 
 export async function signinAction(formData) {
     const email = formData.get('email');
@@ -14,12 +11,7 @@ export async function signinAction(formData) {
     if (!user) {
         return { isError: true, message: 'Invalid credentials' };
     }
-
-    const sessionToken = await new SignJWT(user)
-        .setProtectedHeader({alg: 'HS256'})
-        .sign(JWT_SECRET)
-
-    cookies().set('sessionToken', sessionToken);
+    await setSessionCookie(user);
     redirect('/');
 }
 

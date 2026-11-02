@@ -1,21 +1,5 @@
-import { cookies } from 'next/headers';
-import { jwtVerify } from 'jose';
 import NavLink from './NavLink';
-
-const JWT_SECRET = new TextEncoder().encode('some-random-string');
-
-async function getUserFromSession() {
-    const sessionTokenCookie = cookies().get('sessionToken');
-    if (sessionTokenCookie) {
-        try {
-            const { payload } = await jwtVerify(sessionTokenCookie.value, JWT_SECRET);
-            console.log('payload = ', payload);
-            return payload;
-        } catch (error) {
-            console.error('Invalid JWT', error);
-        }
-    }
-}
+import { getUserFromSession } from '@/lib/auth';
 
 export default async function NavBar() {
     const user = await getUserFromSession();

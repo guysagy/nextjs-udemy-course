@@ -1,7 +1,6 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { setSessionCookie } from '@/lib/auth';
 import { createUser } from '@/lib/user';
 
 export async function signupAction(formData) {

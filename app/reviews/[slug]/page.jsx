@@ -7,6 +7,7 @@ import CommentListSkeleton from '@/components/CommentListSkeleton';
 import CommentList from '@/components/CommentList';
 import CommentForm from '@/components/CommentForm';
 import { getReview } from '@/lib/reviews';
+import { getUserFromSession } from '@/lib/auth';
 import ShareLinkButton from '@/components/ShareLinkButton';
 
 export const dynamic = 'force-dynamic'; // this page is dynamic because we don't know the slugs at build time
@@ -35,6 +36,9 @@ export default async function ReviewPage({ params }) {
     if (!review) {
         notFound();
     }
+
+    const user = await getUserFromSession();
+
     const { title, subtitle, date, image, body } = review;
     return (
         <>
@@ -55,9 +59,9 @@ export default async function ReviewPage({ params }) {
             <section className="border-dashed border-t max-w-screen-sm mt-3 py-3">
                 <h2 className="font-bold flex gap-2 items-center text-xl">
                     <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
-                    Comments
+                    { user ? 'Comments' : <a href="/sign-in" className="text-orange-800 underline">Sign in to comment</a> }
                 </h2>
-                <CommentForm slug={slug} title={review.title} />
+                <CommentForm slug={slug} title={review.title} user={user} />
                 <Suspense fallback={<CommentListSkeleton />}>
                     <CommentList slug={slug} />
                 </Suspense>

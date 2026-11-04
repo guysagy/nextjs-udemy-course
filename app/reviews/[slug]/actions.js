@@ -1,12 +1,17 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createComment } from '@/lib/comments';
+import { getUserFromSession } from '@/lib/auth';
 
 export async function createCommentAction(formData) {
+    const user = await getUserFromSession();
+    if (!user) {
+        return { isError: true, message: 'You must be signed in to comment' };
+    }
 
     const data = {
         slug: formData.get('slug'),
-        user: formData.get('user'),
+        userId: user.id,
         message: formData.get('message'),
     };
 
@@ -34,12 +39,6 @@ export async function createCommentAction(formData) {
 }
 
 function validate(data) {
-    if (!data.user) {
-        return 'Name field is required';
-    }
-    if (data.user.length > 50) {
-        return 'Name field longer than 50 characters';
-    }
     if (!data.message) {
         return 'Comment field is required';
     }
